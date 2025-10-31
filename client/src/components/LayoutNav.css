@@ -1,0 +1,27 @@
+.header {
+  padding: 0;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  z-index: 99;
+}
+
+.menu {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.menu-item {
+  padding: 0 20px;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .menu-item {
+    padding: 0 10px;
+    font-size: 14px; /* Adjust font size to fit smaller screens */
+  }
+}

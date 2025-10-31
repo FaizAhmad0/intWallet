@@ -1,0 +1,123 @@
+/* Navbar.css */
+
+.navbar {
+  background-color: rgb(55, 81, 126);
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  padding: 10px 0;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1300px;
+}
+
+.nav-logo {
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav-logo img {
+  margin-left: 5px;
+}
+
+.nav-icon {
+  display: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  text-align: center;
+}
+
+.nav-item {
+  height: 80px;
+}
+
+.nav-links {
+  color: aliceblue;
+  text-decoration: none;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: large;
+  height: 100%;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-links:hover {
+  color: rgb(71, 178, 228);
+}
+.login-button {
+  background-color: rgb(71, 178, 228);
+}
+
+.nav-links::after {
+  color: rgb(71, 178, 228);
+  border-bottom: 3px solid rgb(71, 178, 228);
+  font-weight: bold;
+  font-size: large;
+}
+
+@media screen and (max-width: 960px) {
+  .nav-icon {
+    display: block;
+  }
+
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 80px);
+    position: absolute;
+    top: 80px;
+    left: -100%;
+    opacity: 0;
+    transition: all 0.5s ease;
+    background-color: white;
+  }
+
+  .nav-menu.active {
+    left: 0;
+    opacity: 1;
+    transition: all 0.5s ease;
+    z-index: 1;
+  }
+
+  .nav-item {
+    width: 100%;
+  }
+
+  .nav-links {
+    color: blue;
+    padding: 2rem;
+    width: 100%;
+    display: table;
+    text-align: center;
+  }
+
+  .active {
+    color: blue;
+    font-weight: bold;
+    border-bottom: none;
+  }
+}

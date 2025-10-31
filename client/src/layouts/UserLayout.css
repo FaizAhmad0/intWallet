@@ -1,0 +1,23 @@
+.ant-menu-dark .ant-menu-item {
+  background-color: #010c17 !important;
+  color: white !important;
+  font-weight: bold !important;
+  font-size: smaller !important;
+}
+.ant-menu-dark .ant-menu-item:hover {
+  background-color: rgb(71, 178, 228) !important;
+  color: white !important;
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: rgb(71, 178, 228) !important;
+  color: #001529 !important;
+}
+.ant-menu-dark {
+  background-color: #1f222e !important;
+}
+@media (max-width: 768px) {
+  .ant-layout-sider {
+    display: none; /* Hide sidebar on mobile */
+  }
+}
