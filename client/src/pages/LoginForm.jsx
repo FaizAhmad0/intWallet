@@ -67,7 +67,7 @@ const LoginForm = () => {
         navigate("/admin-dash");
         break;
       case "dispatch":
-        navigate("/dispatch-dash");
+        navigate("/easyship-order");
         break;
       case "supervisor":
         navigate("/supervisor-dash");

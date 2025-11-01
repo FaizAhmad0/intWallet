@@ -131,16 +131,16 @@ const AdminEasyShipAll = ({ isActive }) => {
     Archived: "default",
   };
 
-   const handleDelete = async (orderId) => {
-     try {
-       await API.delete(`/easyshiporders/delete/${orderId}`);
-       message.success("Order deleted successfully");
-       fetchOrders(pagination.current, pagination.pageSize);
-     } catch (error) {
-       console.error("Delete error:", error);
-       message.error("Failed to delete order");
-     }
-   };
+  const handleDelete = async (orderId) => {
+    try {
+      await API.delete(`/easyshiporders/delete/${orderId}`);
+      message.success("Order deleted successfully");
+      fetchOrders(pagination.current, pagination.pageSize);
+    } catch (error) {
+      console.error("Delete error:", error);
+      message.error("Failed to delete order");
+    }
+  };
 
   const columns = [
     {
@@ -188,10 +188,22 @@ const AdminEasyShipAll = ({ isActive }) => {
       render: (text) => text || <span className="text-gray-400">N/A</span>,
     },
     {
-      title: "Total Amount",
+      title: "Last Mile Partner",
+      dataIndex: "lastmilePartner",
+      key: "lastmilePartner",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
+    },
+    {
+      title: "Last Mile Tracking ID",
+      dataIndex: "lastmileTrakingId",
+      key: "lastmileTrakingId",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
+    },
+    {
+      title: "Amount",
       dataIndex: "finalAmount",
       key: "finalAmount",
-      render: (amount) => `₹ ${amount}`,
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
     },
     {
       title: "Status",

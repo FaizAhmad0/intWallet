@@ -94,15 +94,15 @@ const DispatchLayout = ({ children }) => {
           }}
           items={[
             {
-              key: "/dispatch-dash",
+              key: "/easyship-order",
               icon: <ShoppingCartIcon />,
               label: "Order",
             },
-            {
-              key: "/easyship-order",
-              icon: <AddBusinessIcon />,
-              label: "Self-Ship Order",
-            },
+            // {
+            //   key: "/easyship-order",
+            //   icon: <AddBusinessIcon />,
+            //   label: "Self-Ship Order",
+            // },
             {
               key: "/dispatch-all-client",
               icon: <AccountCircleIcon />,

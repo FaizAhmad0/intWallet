@@ -254,10 +254,22 @@ const ManagerRTD = ({ isActive }) => {
       render: (text) => text || <span className="text-gray-400">N/A</span>,
     },
     {
-      title: "Total Amount",
+      title: "Last Mile Partner",
+      dataIndex: "lastmilePartner",
+      key: "lastmilePartner",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
+    },
+    {
+      title: "Last Mile Tracking ID",
+      dataIndex: "lastmileTrakingId",
+      key: "lastmileTrakingId",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
+    },
+    {
+      title: "Amount",
       dataIndex: "finalAmount",
       key: "finalAmount",
-      render: (amount) => `₹ ${amount}`,
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
     },
     {
       title: "SKU",
@@ -318,14 +330,14 @@ const ManagerRTD = ({ isActive }) => {
               type="primary"
               onClick={() => updateOrderStatuss(record._id, "MARK_TEMPORARY")}
             >
-              Mark as Temporary
+              Mark Last Mile Tracking as Temporary
             </Button>
           ) : (
             <Button
               type="primary"
               onClick={() => updateOrderStatuss(record._id, "MARK_PERMANENT")}
             >
-              Mark as Permanent
+              Mark Last Mile Tracking as Permanent
             </Button>
           )}
         </Space>

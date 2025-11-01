@@ -254,12 +254,7 @@ const ManagerHMI = ({ isActive }) => {
       dataIndex: "orderId",
       key: "orderId",
     },
-    {
-      title: "Total Amount",
-      dataIndex: "finalAmount",
-      key: "finalAmount",
-      render: (amount) => `₹ ${amount}`,
-    },
+
     {
       title: "Tracking ID",
       dataIndex: "trackingId",
@@ -302,6 +297,24 @@ const ManagerHMI = ({ isActive }) => {
           </Tag>
         );
       },
+    },
+    {
+      title: "Last Mile Partner",
+      dataIndex: "lastmilePartner",
+      key: "lastmilePartner",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
+    },
+    {
+      title: "Last Mile Tracking ID",
+      dataIndex: "lastmileTrakingId",
+      key: "lastmileTrakingId",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
+    },
+    {
+      title: "Amount",
+      dataIndex: "finalAmount",
+      key: "finalAmount",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
     },
     {
       title: "Action",

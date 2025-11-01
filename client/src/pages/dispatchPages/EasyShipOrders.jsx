@@ -71,11 +71,11 @@ const EasyShipOrders = () => {
   return (
     <DispatchLayout>
       {/* Create New Order Button */}
-      <div className="flex justify-end">
+      {/* <div className="flex justify-end">
         <Button type="primary" onClick={() => setIsModalOpen(true)}>
           Create New Order
         </Button>
-      </div>
+      </div> */}
 
       {/* Tabs */}
       <Tabs

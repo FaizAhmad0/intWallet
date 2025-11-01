@@ -297,6 +297,24 @@ const EasyShipNewOrders = ({ isActive }) => {
       render: (text) => text || <span className="text-gray-400">N/A</span>,
     },
     {
+      title: "Last Mile Partner",
+      dataIndex: "lastmilePartner",
+      key: "lastmilePartner",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
+    },
+    {
+      title: "Last Mile Tracking ID",
+      dataIndex: "lastmileTrakingId",
+      key: "lastmileTrakingId",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
+    },
+    {
+      title: "Amount",
+      dataIndex: "finalAmount",
+      key: "finalAmount",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
+    },
+    {
       title: "Status",
       dataIndex: "status",
       key: "status",

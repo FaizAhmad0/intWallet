@@ -30,7 +30,9 @@ exports.createEasyShipOrder = async (req, res) => {
     orderId = typeof orderId === "string" ? orderId.trim() : orderId;
     trackingId =
       typeof trackingId === "string" ? trackingId.trim() : trackingId;
-    const finalAmount = orderAmount + shippingAmount;
+    const subtotal = orderAmount + shippingAmount;
+    const finalAmount = subtotal + subtotal * 0.05;
+
 
     if (!enrollment || !orderId || !deliveryPartner) {
       return res.status(400).json({ message: "Missing required fields." });
