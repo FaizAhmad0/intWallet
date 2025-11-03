@@ -166,8 +166,6 @@ const InvoicePage = () => {
               <th className="border p-2">Product</th>
               <th className="border p-2">SKU</th>
               <th className="border p-2">Quantity</th>
-              <th className="border p-2">Price</th>
-              <th className="border p-2">Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -177,10 +175,6 @@ const InvoicePage = () => {
                 <td className="border p-1">{item.name}</td>
                 <td className="border p-1">{item.sku}</td>
                 <td className="border p-1">{item.quantity}</td>
-                <td className="border p-1">₹{item.price.toFixed(2)}</td>
-                <td className="border p-1">
-                  ₹{(item.price * item.quantity).toFixed(2)}
-                </td>
               </tr>
             ))}
           </tbody>
@@ -192,23 +186,28 @@ const InvoicePage = () => {
             <tbody>
               <tr>
                 <td className="border p-1">Total Amount:</td>
-                <td className="border p-1">₹{subtotal.toFixed(2)}</td>
+                <td className="border p-1">₹{order.orderAmount.toFixed(2)}</td>
               </tr>
               <tr>
                 <td className="border p-1">Shipping:</td>
-                <td className="border p-1">₹{shippingTotal.toFixed(2)}</td>
+                <td className="border p-1">
+                  ₹{order.shippingAmount.toFixed(2)}
+                </td>
               </tr>
               <tr>
-                <td className="border p-1">Tax Amount ({finalGSTRate}%):</td>
+                <td className="border p-1">Tax Amount (5%):</td>
                 <td className="border p-1">
-                  ₹{(gstTotal + shippingGSTTotal).toFixed(2)}
+                  ₹
+                  {((order.orderAmount + order.shippingAmount) * 0.05).toFixed(
+                    2
+                  )}
                 </td>
               </tr>
               <tr className="font-bold">
                 <td className="border p-1">
-                  Payable Amount including GST ({finalGSTRate}%):
+                  Payable Amount including GST (5%):
                 </td>
-                <td className="border p-1">₹{grandTotal.toFixed(2)}</td>
+                <td className="border p-1">₹{order.finalAmount.toFixed(2)}</td>
               </tr>
             </tbody>
           </table>
