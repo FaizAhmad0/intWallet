@@ -80,6 +80,12 @@ const ManagerAll = ({ isActive }) => {
       render: (text) => text || <span className="text-gray-400">N/A</span>,
     },
     {
+      title: "Delivery Partner",
+      dataIndex: "deliveryPartner",
+      key: "deliveryPartner",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
+    },
+    {
       title: "Last Mile Partner",
       dataIndex: "lastmilePartner",
       key: "lastmilePartner",

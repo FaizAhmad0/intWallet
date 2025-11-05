@@ -23,6 +23,8 @@ exports.createEasyShipOrder = async (req, res) => {
       lastmileTrakingId,
       shippingAmount,
       country,
+      imageLink,
+      add,
     } = req.body;
 
     enrollment =
@@ -58,12 +60,13 @@ exports.createEasyShipOrder = async (req, res) => {
       finalAmount,
       orderAmount,
       shippingAmount,
+      imageLink,
+      add,
       country,
       status: "NEW",
       date: new Date().toISOString(),
       manager: user ? user.amazonManager : null,
       brandName: user ? user.brandName : null,
-      add: user ? user.address : null,
       pincode: user ? user.pincode : null,
     });
 

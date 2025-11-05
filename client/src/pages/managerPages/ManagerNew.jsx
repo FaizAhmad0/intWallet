@@ -23,6 +23,7 @@ const ManagerNew = ({ isActive }) => {
   const [modalLoading, setModalLoading] = useState(false);
   const [managers, setManagers] = useState([]);
   const [orders, setOrders] = useState([]);
+  console.log(orders);
   const [skuList, setSkuList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -295,6 +296,12 @@ const ManagerNew = ({ isActive }) => {
       render: (text) => text || <span className="text-gray-400">N/A</span>,
     },
     {
+      title: "Delivery Partner",
+      dataIndex: "deliveryPartner",
+      key: "deliveryPartner",
+      render: (text) => text || <span className="text-gray-400">N/A</span>,
+    },
+    {
       title: "Last Mile Partner",
       dataIndex: "lastmilePartner",
       key: "lastmilePartner",
@@ -342,6 +349,22 @@ const ManagerNew = ({ isActive }) => {
           >
             Add SKU
           </Button>
+          <Button
+            className="ml-4"
+            type="primary"
+            size="small"
+            loading={buttonLoadingId === record._id}
+            onClick={() => {
+              if (record.imageLink) {
+                window.open(record.imageLink, "_blank");
+              } else {
+                message.warning("No image link found for this order");
+              }
+            }}
+          >
+            Show Image
+          </Button>
+
           <Button
             className="ml-4"
             type="primary"

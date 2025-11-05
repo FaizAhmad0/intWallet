@@ -250,6 +250,35 @@ const ManagerDash = () => {
               </Select>
             </Form.Item>
             <Form.Item
+              label="Image Link"
+              name="imageLink"
+              rules={[
+                { required: true, message: "Image link is required" },
+                {
+                  validator: (_, value) => {
+                    if (!value) return Promise.resolve();
+                    const driveRegex =
+                      /^https?:\/\/(drive\.google\.com|docs\.google\.com)\//;
+                    return driveRegex.test(value)
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error("Only Google Drive links are allowed")
+                        );
+                  },
+                },
+              ]}
+            >
+              <Input placeholder="Enter Google Drive image link" />
+            </Form.Item>
+
+            <Form.Item
+              label="Address"
+              name="add"
+              rules={[{ required: true, message: "Address is required" }]}
+            >
+              <Input placeholder="Enter customer's address" />
+            </Form.Item>
+            <Form.Item
               label="Country"
               name="country"
               rules={[{ required: true, message: "Country is required" }]}

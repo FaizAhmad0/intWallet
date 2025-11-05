@@ -285,6 +285,20 @@ const ManagerArchived = ({ isActive }) => {
       render: (_, record) => (
         <Space>
           <Button
+            className="ml-4"
+            type="primary"
+            size="small"
+            onClick={() => {
+              if (record.imageLink) {
+                window.open(record.imageLink, "_blank");
+              } else {
+                message.warning("No image link found for this order");
+              }
+            }}
+          >
+            Show Image
+          </Button>
+          <Button
             type="primary"
             onClick={() => updateOrderStatus(record._id, "HMI")}
           >

@@ -73,6 +73,9 @@ const easyshiorderSchema = new Schema(
     add: {
       type: String,
     },
+    imageLink: {
+      type: String,
+    },
     pincode: {
       type: String,
     },
