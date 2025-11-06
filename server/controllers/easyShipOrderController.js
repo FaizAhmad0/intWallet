@@ -35,7 +35,6 @@ exports.createEasyShipOrder = async (req, res) => {
     const subtotal = orderAmount + shippingAmount;
     const finalAmount = subtotal + subtotal * 0.05;
 
-
     if (!enrollment || !orderId || !deliveryPartner) {
       return res.status(400).json({ message: "Missing required fields." });
     }
@@ -168,18 +167,20 @@ exports.searchAllOrders = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 exports.addSKUToOrder = async (req, res) => {
   try {
     const { enrollment, shipmentId, sku } = req.body;
-    const skuList = sku.split(",").map((s) => s.trim());
+    const skuList = sku
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
 
     const user = await User.findOne({ enrollmentIdAmazon: enrollment });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const requiredFields = [user.address, user.pincode, user.state];
+    const requiredFields = [user.pincode, user.state];
     const isIncomplete = requiredFields.some(
       (field) => !field || field.trim() === ""
     );
@@ -187,7 +188,7 @@ exports.addSKUToOrder = async (req, res) => {
     if (isIncomplete) {
       return res
         .status(400)
-        .json({ message: "Update user details (ADD, GST, PINCODE, State)" });
+        .json({ message: "Update user details (PINCODE, State)" });
     }
 
     const order = await Order.findById(shipmentId);
@@ -195,70 +196,24 @@ exports.addSKUToOrder = async (req, res) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    let newItems = [];
-    // let totalAmount = 0;
+    // ✅ Directly create new SKU entries without fetching Product
+    const newItems = skuList.map((singleSKU) => ({
+      name: "Handycraft Item",
+      sku: singleSKU,
+      quantity: 1,
+    }));
 
-    // for (const singleSKU of skuList) {
-    //   const product = await Product.findOne({ sku: singleSKU });
-    //   if (!product) {
-    //     return res
-    //       .status(404)
-    //       .json({ message: `Product with SKU ${singleSKU} not found` });
-    //   }
-
-    //   const baseAmount = product.price + product.shipping;
-    //   const itemAmount = baseAmount + (baseAmount * product.gstRate) / 100;
-    //   totalAmount += itemAmount;
-
-    //   newItems.push({
-    //     name: product.name,
-    //     sku: product.sku,
-    //     price: product.price,
-    //     shipping: product.shipping,
-    //     gstRate: product.gstRate,
-    //     dimension: product.dimension,
-    //     weight: product.weight,
-    //     hsn: product.hsn,
-    //     quantity: 1,
-    //   });
-    // }
-    for (const singleSKU of skuList) {
-      const product = await Product.findOne({ sku: singleSKU });
-      if (!product) {
-        return res
-          .status(404)
-          .json({ message: `Product with SKU ${singleSKU} not found` });
-      }
-
-      // ✅ If Easy-ship, exclude shipping from calculation
-      // const shippingCost =
-      //   order.orderType === "Easy-ship" ? 0 : product.shipping;
-      // const baseAmount = product.price + shippingCost;
-      // const itemAmount = baseAmount + (baseAmount * product.gstRate) / 100;
-      // totalAmount += itemAmount;
-
-      newItems.push({
-        name: product.name,
-        sku: product.sku,
-        price: product.price,
-        gstRate: product.gstRate,
-        dimension: product.dimension,
-        weight: product.weight,
-        hsn: product.hsn,
-        quantity: 1,
-      });
-    }
-
+    // Append to existing items
     order.items = [...order.items, ...newItems];
     order.brandName = user.brandName;
     order.manager = user.amazonManager;
     order.state = user.state;
+
+    // Keep your order amount and status logic intact
     if (user.amount >= order.finalAmount) {
-      // Deduct from user
       user.amount -= order.finalAmount;
       await user.save();
 
-      // Create transaction
       const newTransaction = new Transaction({
         userId: user._id.toString(),
         enrollmentIdAmazon: user.enrollmentIdAmazon,
@@ -287,6 +242,125 @@ exports.addSKUToOrder = async (req, res) => {
       .json({ message: "Server error while adding SKU to order" });
   }
 };
+
+// exports.addSKUToOrder = async (req, res) => {
+//   try {
+//     const { enrollment, shipmentId, sku } = req.body;
+//     const skuList = sku.split(",").map((s) => s.trim());
+
+//     const user = await User.findOne({ enrollmentIdAmazon: enrollment });
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     const requiredFields = [user.pincode, user.state];
+//     const isIncomplete = requiredFields.some(
+//       (field) => !field || field.trim() === ""
+//     );
+
+//     if (isIncomplete) {
+//       return res
+//         .status(400)
+//         .json({ message: "Update user details (ADD, GST, PINCODE, State)" });
+//     }
+
+//     const order = await Order.findById(shipmentId);
+//     if (!order) {
+//       return res.status(404).json({ message: "Order not found" });
+//     }
+
+//     let newItems = [];
+//     // let totalAmount = 0;
+
+//     // for (const singleSKU of skuList) {
+//     //   const product = await Product.findOne({ sku: singleSKU });
+//     //   if (!product) {
+//     //     return res
+//     //       .status(404)
+//     //       .json({ message: `Product with SKU ${singleSKU} not found` });
+//     //   }
+
+//     //   const baseAmount = product.price + product.shipping;
+//     //   const itemAmount = baseAmount + (baseAmount * product.gstRate) / 100;
+//     //   totalAmount += itemAmount;
+
+//     //   newItems.push({
+//     //     name: product.name,
+//     //     sku: product.sku,
+//     //     price: product.price,
+//     //     shipping: product.shipping,
+//     //     gstRate: product.gstRate,
+//     //     dimension: product.dimension,
+//     //     weight: product.weight,
+//     //     hsn: product.hsn,
+//     //     quantity: 1,
+//     //   });
+//     // }
+//     for (const singleSKU of skuList) {
+//       const product = await Product.findOne({ sku: singleSKU });
+//       if (!product) {
+//         return res
+//           .status(404)
+//           .json({ message: `Product with SKU ${singleSKU} not found` });
+//       }
+
+//       // ✅ If Easy-ship, exclude shipping from calculation
+//       // const shippingCost =
+//       //   order.orderType === "Easy-ship" ? 0 : product.shipping;
+//       // const baseAmount = product.price + shippingCost;
+//       // const itemAmount = baseAmount + (baseAmount * product.gstRate) / 100;
+//       // totalAmount += itemAmount;
+
+//       newItems.push({
+//         name: product.name,
+//         sku: product.sku,
+//         price: product.price,
+//         gstRate: product.gstRate,
+//         dimension: product.dimension,
+//         weight: product.weight,
+//         hsn: product.hsn,
+//         quantity: 1,
+//       });
+//     }
+
+//     order.items = [...order.items, ...newItems];
+//     order.brandName = user.brandName;
+//     order.manager = user.amazonManager;
+//     order.state = user.state;
+//     if (user.amount >= order.finalAmount) {
+//       // Deduct from user
+//       user.amount -= order.finalAmount;
+//       await user.save();
+
+//       // Create transaction
+//       const newTransaction = new Transaction({
+//         userId: user._id.toString(),
+//         enrollmentIdAmazon: user.enrollmentIdAmazon,
+//         amount: order.finalAmount.toFixed(2),
+//         credit: false,
+//         debit: true,
+//         description: "Deduct while purchasing product",
+//       });
+//       await newTransaction.save();
+
+//       order.status = "RTD";
+//     } else {
+//       order.status = "HMI";
+//     }
+
+//     await order.save();
+
+//     return res.status(200).json({
+//       message: "SKU(s) added to order successfully",
+//       updatedOrder: order,
+//     });
+//   } catch (err) {
+//     console.error("Error adding SKU to order:", err.message);
+//     return res
+//       .status(500)
+//       .json({ message: "Server error while adding SKU to order" });
+//   }
+// };
 
 exports.archiveOrder = async (req, res) => {
   try {

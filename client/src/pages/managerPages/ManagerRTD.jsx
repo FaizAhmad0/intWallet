@@ -322,6 +322,20 @@ const ManagerRTD = ({ isActive }) => {
           >
             Shipped
           </Button>
+          <Button
+            className="ml-4"
+            type="primary"
+            size="small"
+            onClick={() => {
+              if (record.imageLink) {
+                window.open(record.imageLink, "_blank");
+              } else {
+                message.warning("No image link found for this order");
+              }
+            }}
+          >
+            Show Image
+          </Button>
           <Button danger onClick={() => updateOrderStatus(record._id, "PNA")}>
             PNA
           </Button>

@@ -340,6 +340,21 @@ const EasyShipNewOrders = ({ isActive }) => {
           <Button
             className="ml-4"
             type="primary"
+            size="small"
+            loading={buttonLoadingId === record._id}
+            onClick={() => {
+              if (record.imageLink) {
+                window.open(record.imageLink, "_blank");
+              } else {
+                message.warning("No image link found for this order");
+              }
+            }}
+          >
+            Show Image
+          </Button>
+          <Button
+            className="ml-4"
+            type="primary"
             danger
             size="small"
             loading={buttonLoadingId === record._id}
@@ -398,39 +413,42 @@ const EasyShipNewOrders = ({ isActive }) => {
         onChange={handleTableChange}
       />
 
-      {/* Add SKU Modal */}
-      <Modal
-        title="Add SKU(s)"
-        open={isModalVisible}
-        onOk={handleModalOk}
-        onCancel={() => setIsModalVisible(false)}
-        okText="Add"
-        confirmLoading={modalLoading}
-      >
-        <Form layout="vertical">
-          <Form.Item label="Enter SKU(s)">
-            <Select
-              mode="tags"
-              style={{ width: "100%" }}
-              placeholder="Type or select SKU(s)"
-              value={skuInput.split(",").filter(Boolean)}
-              onChange={(value) => setSkuInput(value.join(","))}
-              showSearch
-              allowClear
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                option.children.toLowerCase().includes(input.toLowerCase())
-              }
-            >
-              {skuList.map((item) => (
-                <Option key={item.sku} value={item.sku}>
-                  {item.sku}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
+     <Modal
+         title="Add SKU(s)"
+         open={isModalVisible}
+         onOk={handleModalOk}
+         onCancel={() => setIsModalVisible(false)}
+         okText="Add"
+         confirmLoading={modalLoading}
+       >
+         <Form layout="vertical">
+           <Form.Item label="Enter SKU(s)">
+             <Select
+               mode="tags"
+               style={{ width: "100%" }}
+               placeholder="Type SKU(s) and press space or enter"
+               value={skuInput.split(",").filter(Boolean)}
+               onChange={(value) => setSkuInput(value.join(","))}
+               onInputKeyDown={(event) => {
+                 // Add tag on space or enter
+                 if (
+                   (event.key === " " || event.key === "Enter") &&
+                   event.target.value
+                 ) {
+                   const newSku = event.target.value.trim();
+                   const existing = skuInput.split(",").filter(Boolean);
+                   if (newSku && !existing.includes(newSku)) {
+                     setSkuInput([...existing, newSku].join(","));
+                   }
+                   event.preventDefault(); // prevent default tag behavior
+                 }
+               }}
+               tokenSeparators={[" "]} // automatically split by space
+               allowClear
+             />
+           </Form.Item>
+         </Form>
+       </Modal>
     </div>
   );
 };

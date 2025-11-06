@@ -303,13 +303,28 @@ const EasyShipPNA = ({ isActive }) => {
       title: "Action",
       key: "action",
       render: (_, record) => (
-        <Button
-          type="primary"
-          onClick={() => updateOrderStatus(record._id, "RTD")}
-          loading={buttonLoading[record._id]}
-        >
-          Mark Available
-        </Button>
+        <>
+          <Button
+            type="primary"
+            onClick={() => updateOrderStatus(record._id, "RTD")}
+            loading={buttonLoading[record._id]}
+          >
+            Mark Available
+          </Button>
+          <Button
+            className="ml-4"
+            type="primary"
+            onClick={() => {
+              if (record.imageLink) {
+                window.open(record.imageLink, "_blank");
+              } else {
+                message.warning("No image link found for this order");
+              }
+            }}
+          >
+            Show Image
+          </Button>
+        </>
       ),
     },
   ];

@@ -7,6 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 const ManagerClients = () => {
   const [clients, setClients] = useState([]);
+  console.log(clients);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
     current: 1,

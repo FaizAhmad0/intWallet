@@ -320,6 +320,19 @@ const EasyShipHMI = ({ isActive }) => {
             Show Balance
           </Button>
           <Button
+            className="ml-4"
+            type="primary"
+            onClick={() => {
+              if (record.imageLink) {
+                window.open(record.imageLink, "_blank");
+              } else {
+                message.warning("No image link found for this order");
+              }
+            }}
+          >
+            Show Image
+          </Button>
+          <Button
             type="default"
             onClick={() =>
               handlePay(record.enrollment, record._id, record.finalAmount)
@@ -327,6 +340,7 @@ const EasyShipHMI = ({ isActive }) => {
           >
             Pay
           </Button>
+
           <Button
             danger
             type="dashed"

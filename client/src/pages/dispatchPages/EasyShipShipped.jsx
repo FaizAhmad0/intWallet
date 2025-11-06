@@ -304,6 +304,19 @@ const EasyShipShipped = ({ isActive }) => {
           >
             UnShip
           </Button>
+          <Button
+            className="ml-4"
+            type="primary"
+            onClick={() => {
+              if (record.imageLink) {
+                window.open(record.imageLink, "_blank");
+              } else {
+                message.warning("No image link found for this order");
+              }
+            }}
+          >
+            Show Image
+          </Button>
         </Space>
       ),
     },
