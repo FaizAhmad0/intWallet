@@ -52,28 +52,64 @@ const Wallet = () => {
   const closeModal = () => setIsModalOpen(false);
 
   const handleAddBalance = async () => {
-    if (!amount || Number(amount) <= 0)
+    if (!amount || Number(amount) <= 0) {
       return message.error("Please enter a valid amount!");
+    }
 
     try {
       setLoading(true);
+
+      // Call backend API
       const { data } = await API.post("/wallet/add-balance", {
         amount: Number(amount),
       });
 
-      message.success("Balance added successfully!");
-      if (data.paymentURL) window.open(data.paymentURL, "_blank");
+      // Check if paymentURL exists in response
+      if (data.paymentURL) {
+        // Save merchant transaction ID if available
+        if (data.raw?.data?.merchantTxnId) {
+          localStorage.setItem("pg_txn", data.raw.data.merchantTxnId);
+        }
 
-      closeModal();
-      setAmount("");
-      getUserData();
+        // Redirect user to PayGlocal payment page
+        window.location.href = data.paymentURL;
+        return; // stop further execution
+      }
+
+      message.error("Payment URL not received.");
     } catch (error) {
       console.error("Add balance error:", error);
       message.error("Failed to add balance.");
     } finally {
       setLoading(false);
+      setAmount(""); // reset amount input
+      closeModal(); // close modal after processing
     }
   };
+
+  // const handleAddBalance = async () => {
+  //   if (!amount || Number(amount) <= 0)
+  //     return message.error("Please enter a valid amount!");
+
+  //   try {
+  //     setLoading(true);
+  //     const { data } = await API.post("/wallet/add-balance", {
+  //       amount: Number(amount),
+  //     });
+
+  //     message.success("Balance added successfully!");
+  //     if (data.paymentURL) window.open(data.paymentURL, "_blank");
+
+  //     closeModal();
+  //     setAmount("");
+  //     getUserData();
+  //   } catch (error) {
+  //     console.error("Add balance error:", error);
+  //     message.error("Failed to add balance.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const getUserData = async () => {
     try {
@@ -86,6 +122,17 @@ const Wallet = () => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    const merchantTxnId = localStorage.getItem("pg_txn");
+    if (!merchantTxnId) return;
+
+    API.post("/wallet/verify-balance", { merchantTxnId })
+      .then(() => {
+        message.success("Payment Verified");
+        localStorage.removeItem("pg_txn");
+      })
+      .catch(() => message.error("Verification failed"));
+  }, []);
 
   useEffect(() => {
     getUserData();
