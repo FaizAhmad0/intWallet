@@ -44,7 +44,7 @@ exports.addBalance = async (req, res) => {
     });
 
     axios.post(
-      "https://apiwallet.saumiccraft.com/payglocal/callback",
+      "/payglocal/callback",
       async (req, res) => {
         try {
           // PayGlocal sends token in headers
