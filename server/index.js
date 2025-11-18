@@ -5,7 +5,6 @@ const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRoutes");
 const PORT = process.env.PORT || 7000;
 const loginRoute = require("./routes/LouginRoutes");
-const payGlocal = require("./routes/payGlocal");
 const adminRoutes = require("./routes/adminRoutes");
 const managerRoutes = require("./routes/managerRoutes");
 const walletRoutes = require("./routes/walletRoutes");
@@ -19,6 +18,8 @@ const { logoutAll } = require("./controllers/userController");
 dotenv.config();
 const app = express();
 app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
