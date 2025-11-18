@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRoutes");
 const PORT = process.env.PORT || 7000;
 const loginRoute = require("./routes/LouginRoutes");
+const payGlocal = require("./routes/payGlocal");
 const adminRoutes = require("./routes/adminRoutes");
 const managerRoutes = require("./routes/managerRoutes");
 const walletRoutes = require("./routes/walletRoutes");
@@ -25,14 +26,16 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use("/login", loginRoute);
+app.use("/payglocal/callback", payGlocal);
 app.use("/admin", adminRoutes);
 app.use("/manager", managerRoutes);
 app.use("/user", userRoutes);
 app.use("/wallet", walletRoutes);
 app.use("/orders", orderRoutes);
-app.use("/easyshiporders",easyShipOrderRoutes );
+app.use("/easyshiporders", easyShipOrderRoutes);
 app.use("/products", productRoutes);
 // scheduleShiprocketFetch();
 mongoose

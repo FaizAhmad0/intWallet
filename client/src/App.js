@@ -72,7 +72,12 @@ function App() {
               element={<QuickDeliveryOrders />}
             />
             <Route path="/wallet" exact element={<Wallet />} />
-            <Route path="/payment-status" exact element={<PaymentStatus />} />
+            {/* <Route path="/payment-status" exact element={<PaymentStatus />} /> */}
+            <Route
+              path="/payglocal/callback"
+              exact
+              element={<PaymentStatus />}
+            />
             <Route path="/tiar" exact element={<Tier />} />
             <Route path="/invoice" exact element={<InvoicePage />} />
           </Route>

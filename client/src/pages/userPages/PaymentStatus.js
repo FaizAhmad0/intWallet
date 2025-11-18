@@ -22,10 +22,8 @@ const PaymentStatus = () => {
 
       if (paymentRequestId && paymentId) {
         try {
-          const response = await API.post("/wallet/verify-payment", {
-            paymentRequestId,
-            paymentId,
-          });
+          const response = await API.post("/payglocal/callback", {});
+          console.log(response);
 
           if (response.data.success) {
             message.success("Payment Successful!");
