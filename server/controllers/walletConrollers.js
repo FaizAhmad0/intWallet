@@ -21,7 +21,7 @@ exports.addBalance = async (req, res) => {
         txnCurrency: "INR",
       },
 
-      merchantCallbackURL: "https://wallet.saumiccraft.com/payglocal/callback",
+      merchantCallbackURL: "https://apiwallet.saumiccraft.com/callbackurl",
     };
 
     const { jweToken, jwsToken } = await generate({
