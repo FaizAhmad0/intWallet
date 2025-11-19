@@ -64,14 +64,10 @@ const Wallet = () => {
         amount: Number(amount),
       });
 
-      // Check if paymentURL exists in response
       if (data.paymentURL) {
-        // Save merchant transaction ID if available
-        if (data.raw?.data?.merchantTxnId) {
-          localStorage.setItem("pg_txn", data.raw.data.merchantTxnId);
+        if (data.gid) {
+          localStorage.setItem("gid", data.gid);
         }
-
-        // Redirect user to PayGlocal payment page
         window.location.href = data.paymentURL;
         return; // stop further execution
       }
