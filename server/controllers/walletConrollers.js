@@ -8,15 +8,16 @@ exports.addBalance = async (req, res) => {
   try {
     const { amount } = req.body;
     const user = await User.findById(req.user.id);
+    console.log(user);
     if (!user) return res.status(404).json({ error: "User not found" });
 
     // const merchantTxnId = "txn_" + Date.now();
 
     const payload = {
-      merchantTxnId: "23AEE8CB6B62EE2AF07",
+      merchantUniqueId: `${user.uid}`,
 
       paymentData: {
-        totalAmount: "15",
+        totalAmount: `${amount}`,
 
         txnCurrency: "INR",
       },
@@ -77,7 +78,6 @@ exports.verifyBalance = async (req, res) => {
       publicKeyId: process.env.PUBLIC_KEY_ID,
       privateKeyId: process.env.PRIVATE_KEY_ID,
     });
-
     // Payglocal Status URL (Dynamic)
     const url = `https://api.uat.payglocal.in/gl/v1/payments/${gid}/status`;
 

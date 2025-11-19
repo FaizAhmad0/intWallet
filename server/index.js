@@ -96,6 +96,14 @@ app.post("/callbackurl", (req, res) => {
     // return res.json({ error: 'Server error', details: err.message });
   }
 });
+
+// server.js or index.js
+app.use(
+  "/webhook/payglocal",
+  express.json({ type: "*/*" }),
+  require("./controllers/webhookController")
+);
+
 // app.use("/payglocal/callback", payGlocal);
 app.use("/admin", adminRoutes);
 app.use("/manager", managerRoutes);
