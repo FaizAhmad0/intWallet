@@ -68,6 +68,8 @@ app.post("/callbackurl", (req, res) => {
         gid: decoded.gid || decoded["x-gl-gid"] || "N/A",
         paymentMethod: decoded.paymentMethod || "CARD",
       });
+      const gid = decoded.gid || decoded["x-gl-gid"] || "N/A";
+
       console.log(
         "Would redirect to success page with:",
         queryParams.toString()
