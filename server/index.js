@@ -72,7 +72,9 @@ app.post("/callbackurl", (req, res) => {
         "Would redirect to success page with:",
         queryParams.toString()
       );
-      return res.redirect(`https://wallet.saumiccraft.com/wallet`);
+      return res.redirect(
+        `https://wallet.saumiccraft.com/payment-status?gid=${gid}&status=success`
+      );
       // return res.json({ ok: true, payload: decoded, redirectUrl: `http://localhost:8080/#/payment-success?${queryParams.toString()}` });
     } else {
       const reason =
