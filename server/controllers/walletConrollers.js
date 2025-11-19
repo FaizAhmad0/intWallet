@@ -14,7 +14,7 @@ exports.addBalance = async (req, res) => {
     // const merchantTxnId = "txn_" + Date.now();
 
     const payload = {
-      merchantUniqueId: `${user.uid}`,
+      merchantUniqueId: `${user._id}`,
       merchantTxnId: "23AEE8CB6B62EE2AF07",
       paymentData: {
         totalAmount: `${amount}`,
