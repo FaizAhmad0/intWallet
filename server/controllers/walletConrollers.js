@@ -42,6 +42,8 @@ exports.addBalance = async (req, res) => {
       },
     });
 
+    console.log(pgRes);
+
     return res.json({
       paymentURL: pgRes.data.data.redirectUrl || pgRes.data.paymentURL,
       raw: pgRes.data,
