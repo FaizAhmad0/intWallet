@@ -65,9 +65,8 @@ const Wallet = () => {
       });
       console.log(data);
       if (data.paymentURL) {
-        if (data.gid) {
-          localStorage.setItem("gid", data.gid);
-        }
+        localStorage.setItem("gid", data.raw.data.gid);
+
         window.location.href = data.paymentURL;
         return; // stop further execution
       }
