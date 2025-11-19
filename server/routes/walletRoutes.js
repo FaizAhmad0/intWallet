@@ -8,7 +8,7 @@ const {
 } = require("../controllers/walletConrollers");
 
 router.post("/add-balance", auth, addBalance);
-// router.post("/verify-payment", auth, verifyBalance);
+router.post("/verify-payment", auth, verifyBalance);
 // router.post("/verify-payment", auth, verifyBalance);
 
 module.exports = router;

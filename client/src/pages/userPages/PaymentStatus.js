@@ -32,7 +32,7 @@ const PaymentStatus = () => {
 
         console.log("Sending to API:", body);
 
-        const response = await API.post("/wallet/success", body);
+        const response = await API.post("/wallet/verify-payment", body);
 
         console.log("Backend Response:", response.data);
       } catch (error) {
