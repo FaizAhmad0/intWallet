@@ -45,7 +45,6 @@ exports.addBalance = async (req, res) => {
     return res.json({
       paymentURL: pgRes.data.data.redirectUrl || pgRes.data.paymentURL,
       raw: pgRes.data,
-      gid: pgRes.data.data.gid,
     });
   } catch (err) {
     console.error("Payglocal Error:", err.response?.data || err.message);
