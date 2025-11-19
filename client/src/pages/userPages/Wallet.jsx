@@ -63,7 +63,7 @@ const Wallet = () => {
       const { data } = await API.post("/wallet/add-balance", {
         amount: Number(amount),
       });
-
+      console.log(data);
       if (data.paymentURL) {
         if (data.gid) {
           localStorage.setItem("gid", data.gid);
