@@ -8,7 +8,7 @@ const nodemailer = require("nodemailer");
 // POST /login
 router.post("/", async (req, res) => {
   const { uid: rawUid, password } = req.body;
-  const uid = rawUid.replace(/^UID/, "");
+  const uid = Number(rawUid.replace(/^UID/, ""));
 
   const user = await User.findOne({ uid });
   if (!user) {

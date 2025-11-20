@@ -10,16 +10,11 @@ module.exports = async (req, res) => {
     console.log("Headers:", headers);
     console.log("Body:", body);
 
-    // 1. Validate Signature (IMPORTANT — Add if PayGlocal provides signature key)
     const signature = headers["x-gl-signature"];
     if (!signature) {
       console.log("⚠ No webhook signature found");
       return res.status(400).json({ error: "Signature missing" });
     }
-
-    // TODO: signature verification logic here if required
-    // verifySignature(body, signature);
-
     const gid = body?.gid || body?.["x-gl-gid"] || body?.payment?.gid || null;
 
     const status = body?.status || body?.payment?.status || "UNKNOWN";
