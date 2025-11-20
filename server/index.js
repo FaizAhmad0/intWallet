@@ -75,7 +75,7 @@ app.post("/callbackurl", (req, res) => {
         queryParams.toString()
       );
       return res.redirect(
-        `https://wallet.saumiccraft.com/payment-status?gid=${gid}`
+        `https://wallet.saumiccraft.com/payment-success`
       );
 
       // return res.json({ ok: true, payload: decoded, redirectUrl: `http://localhost:8080/#/payment-success?${queryParams.toString()}` });
@@ -86,7 +86,7 @@ app.post("/callbackurl", (req, res) => {
         `Payment status: ${decoded.status}`;
       console.log("Would redirect to failure page with reason:", reason);
       return res.redirect(
-        `https://wallet.saumiccraft.com/payment-status-failed`
+        `https://wallet.saumiccraft.com/payment-failed`
       );
       // return res.json({ ok: false, payload: decoded, redirectUrl: `http://localhost:8080/#/payment-failure?reason=${encodeURIComponent(reason)}&txnId=${decoded.merchantTxnId || 'N/A'}` });
     }

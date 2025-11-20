@@ -9,11 +9,9 @@ module.exports = async (req, res) => {
 
     console.log("Extracted:", { amount, gid, merchantTxnId, status });
 
-    // Only process when payment is successful
     if (status === "SENT_FOR_CAPTURE") {
       console.log("Processing successful SENT_FOR_CAPTURE payment...");
 
-      // 1️⃣ Find user based on merchantTxnId = user._id
       const user = await User.findById(merchantTxnId);
 
       if (!user) {
@@ -24,16 +22,12 @@ module.exports = async (req, res) => {
         return res.status(400).json({ error: "Missing enrollmentIdAmazon" });
       }
 
-      // Convert amount to number
       const amountNumber = Number(amount);
-
-      // 2️⃣ Add amount to user's wallet
       user.amount = (user.amount || 0) + amountNumber;
       await user.save();
 
       console.log("Updated user amount:", user.amount);
 
-      // 3️⃣ Create a new Transaction
       const newTransaction = new Transaction({
         userId: user._id.toString(),
         enrollmentIdAmazon: user.enrollmentIdAmazon,
@@ -41,7 +35,7 @@ module.exports = async (req, res) => {
         credit: true,
         debit: false,
         description: "Wallet recharge",
-        gid, // Must remain unique
+        gid,
       });
 
       await newTransaction.save();
