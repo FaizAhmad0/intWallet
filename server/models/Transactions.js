@@ -12,9 +12,6 @@ const transactionSchema = new Schema(
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-    },
     amount: {
       type: String,
       required: true,
@@ -31,7 +28,7 @@ const transactionSchema = new Schema(
       type: String,
       required: true,
     },
-    paymentId: {
+    gid: {
       type: String,
       unique: true,
     },
