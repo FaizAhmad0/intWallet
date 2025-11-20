@@ -117,17 +117,6 @@ const Wallet = () => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    const merchantTxnId = localStorage.getItem("pg_txn");
-    if (!merchantTxnId) return;
-
-    API.post("/wallet/verify-balance", { merchantTxnId })
-      .then(() => {
-        message.success("Payment Verified");
-        localStorage.removeItem("pg_txn");
-      })
-      .catch(() => message.error("Verification failed"));
-  }, []);
 
   useEffect(() => {
     getUserData();

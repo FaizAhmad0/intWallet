@@ -33,6 +33,7 @@ import AccountantWalletAction from "./pages/AccountantWalletAction";
 import AdminEasyShipOrders from "./pages/adminPages/AdminEasyShipOrders";
 import AccountantUsers from "./pages/AccountantUsers";
 import DispatchClients from "./pages/dispatchPages/DispatchClients";
+import PaymentFailed from "./pages/userPages/PaymentFailed";
 
 function App() {
   return (
@@ -72,7 +73,8 @@ function App() {
               element={<QuickDeliveryOrders />}
             />
             <Route path="/wallet" exact element={<Wallet />} />
-            <Route path="/payment-status" exact element={<PaymentStatus />} />
+            <Route path="/payment-success" exact element={<PaymentStatus />} />
+            <Route path="/payment-failed" exact element={<PaymentFailed />} />
             {/* <Route
               path="/payglocal/callback"
               exact
