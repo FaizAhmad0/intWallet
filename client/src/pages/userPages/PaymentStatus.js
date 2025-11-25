@@ -75,7 +75,7 @@ const PaymentStatus = () => {
               onClick={goToWallet}
               className="w-full py-2 border border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition"
             >
-              Go to Wallet
+              Go to Dashboard
             </button>
           </div>
         </div>
