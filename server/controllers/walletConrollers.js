@@ -17,8 +17,18 @@ exports.addBalance = async (req, res) => {
       merchantTxnId: `${user._id}`,
       paymentData: {
         totalAmount: `${amount}`,
-
-        txnCurrency: "INR",
+        txnCurrency: "USD",
+      },
+      riskData: {
+        shippingData: {
+          firstName: `${user.name}`,
+          addressStreet1: `${user.address}`,
+          addressState: `${user.state}`,
+          addressPostalCode: `${user.pincode}`,
+          addressCountry: `${user.country}`,
+          emailId: `${user.email}`,
+          phoneNumber: `${user.primaryContact}`,
+        },
       },
 
       merchantCallbackURL: "https://apiwallet.saumiccraft.com/callbackurl",
