@@ -18,6 +18,14 @@ exports.addBalance = async (req, res) => {
       paymentData: {
         totalAmount: `${amount}`,
         txnCurrency: "USD",
+        billingData: {
+          firstName: `${user.name}`,
+          addressStreet1: `${user.address}`,
+          addressState: `${user.state}`,
+          addressPostalCode: `${user.pincode}`,
+          // addressCountry: `${user.country}`,
+          emailId: `${user.email}`,
+        },
       },
       riskData: {
         shippingData: {
@@ -25,7 +33,7 @@ exports.addBalance = async (req, res) => {
           addressStreet1: `${user.address}`,
           addressState: `${user.state}`,
           addressPostalCode: `${user.pincode}`,
-          addressCountry: `${user.country}`,
+          // addressCountry: `${user.country}`,
           emailId: `${user.email}`,
           phoneNumber: `${user.primaryContact}`,
         },
@@ -33,6 +41,8 @@ exports.addBalance = async (req, res) => {
 
       merchantCallbackURL: "https://apiwallet.saumiccraft.com/callbackurl",
     };
+
+    // console.log("Generated Payload:", payload);
 
     const { jweToken, jwsToken } = await generate({
       payload,
@@ -55,6 +65,7 @@ exports.addBalance = async (req, res) => {
     return res.json({
       paymentURL: pgRes.data.data.redirectUrl || pgRes.data.paymentURL,
       raw: pgRes.data,
+      payload: payload,
     });
   } catch (err) {
     console.error("Payglocal Error:", err.response?.data || err.message);
