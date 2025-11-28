@@ -22,7 +22,7 @@ exports.addBalance = async (req, res) => {
       merchantTxnId: `${user._id}`,
       paymentData: {
         totalAmount: `${amount}`,
-        txnCurrency: countryCode === "IN" ? "INR" : "USD",
+        txnCurrency: country === "IN" ? "INR" : "USD",
         billingData: {
           firstName: `${user.name}`,
           addressStreet1: `${user.address}`,
