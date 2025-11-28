@@ -23,7 +23,7 @@ exports.addBalance = async (req, res) => {
           addressStreet1: `${user.address}`,
           addressState: `${user.state}`,
           addressPostalCode: `${user.pincode}`,
-          // addressCountry: `${user.country}`,
+          addressCountry: "IN",
           emailId: `${user.email}`,
         },
       },
