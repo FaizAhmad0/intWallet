@@ -12,18 +12,23 @@ exports.addBalance = async (req, res) => {
     if (!user) return res.status(404).json({ error: "User not found" });
 
     // const merchantTxnId = "txn_" + Date.now();
+    const country = user.country
+      ? user.country.trim().slice(0, 2).toUpperCase()
+      : "";
+
+    console.log(country);
 
     const payload = {
       merchantTxnId: `${user._id}`,
       paymentData: {
         totalAmount: `${amount}`,
-        txnCurrency: "USD",
+        txnCurrency: countryCode === "IN" ? "INR" : "USD",
         billingData: {
           firstName: `${user.name}`,
           addressStreet1: `${user.address}`,
           addressState: `${user.state}`,
           addressPostalCode: `${user.pincode}`,
-          addressCountry: "IN",
+          addressCountry: `${country}`,
           emailId: `${user.email}`,
         },
       },
@@ -33,7 +38,7 @@ exports.addBalance = async (req, res) => {
           addressStreet1: `${user.address}`,
           addressState: `${user.state}`,
           addressPostalCode: `${user.pincode}`,
-          // addressCountry: `${user.country}`,
+          addressCountry: `${country}`,
           emailId: `${user.email}`,
           phoneNumber: `${user.primaryContact}`,
         },
