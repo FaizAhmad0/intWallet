@@ -59,7 +59,7 @@ exports.addBalance = async (req, res) => {
     });
 
     const url =
-      "https://api.uat.payglocal.in/gl/v1/payments/initiate/paycollect";
+      "https://api.prod.payglocal.in/gl/v1/payments/initiate/paycollect";
     const pgRes = await axios.post(url, jweToken, {
       headers: {
         "Content-Type": "text/plain",
@@ -104,7 +104,7 @@ exports.verifyBalance = async (req, res) => {
       privateKeyId: process.env.PRIVATE_KEY_ID,
     });
     // Payglocal Status URL (Dynamic)
-    const url = `https://api.uat.payglocal.in/gl/v1/payments/${gid}/status`;
+    const url = `https://api.prod.payglocal.in/gl/v1/payments/${gid}/status`;
 
     const pgRes = await axios.get(url, {
       headers: {
